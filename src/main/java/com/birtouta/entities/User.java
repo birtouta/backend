@@ -2,6 +2,7 @@ package com.birtouta.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,11 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="users")
 public class User implements Serializable {
@@ -44,7 +47,17 @@ public class User implements Serializable {
 	private String pin; 
 	private int deteled ;
 	
-	protected User () {};
+	
+	
+	@OneToOne(mappedBy="user", cascade = CascadeType.ALL)
+	private Configuration configuration; 
+    
+//	
+//	@OneToMany(mappedBy="user")
+//	private Set<Session> sessions;
+//	
+	
+	public User () {};
 	
 	public User(String phone, String password, String city, String state, String email, String first_name,
 			String last_name, String address, String latitude, String longitude, Date created_at) {
@@ -68,7 +81,7 @@ public class User implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getPhne() {
+	public String getPhone() {
 		return phone;
 	}
 	public void setPhone(String phone) {
@@ -152,12 +165,15 @@ public class User implements Serializable {
 	public void setDeteled(int deteled) {
 		this.deteled = deteled;
 	}
+
+	public Configuration getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
+	}
 	
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Configuration configuration;
-	
-	
-	
-	
-	
+
+		
 }

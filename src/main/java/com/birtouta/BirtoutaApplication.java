@@ -3,7 +3,6 @@ package com.birtouta;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -39,7 +38,7 @@ public class BirtoutaApplication implements CommandLineRunner {
 
 		
 		userRepository.findAll().forEach(user -> {
-			System.out.println(user.getPhne() +" => " + user.getFirst_name() +" => " + user.getLast_name() );
+			System.out.println(user.getPhone() +" => " + user.getFirst_name() +" => " + user.getLast_name() );
 		});
 	}
 
