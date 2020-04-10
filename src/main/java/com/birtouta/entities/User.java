@@ -16,9 +16,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name="users")
+
 public class User implements Serializable {
 	
 
@@ -27,21 +30,29 @@ public class User implements Serializable {
 	@Column(name = "id")
 	private Long id; 
 	
+	@Column(name="phone", nullable = false)	
 	private String phone; 
+	
+	@Column(name="password", nullable = false)
 	private String password; 
+	
 	private String city; 
 	private String state; 
 	private String email; 
-	private String first_name; 
-	private String last_name; 
+	private String firstName; 
+	private String lastName; 
 	private String address; 
 	private String latitude;
 	private String longitude; 
 	
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_at", nullable = false, updatable = false)
+    @CreationTimestamp
 	private Date created_at; 
 	
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated_at")
+ 
 	private Date updated_at; 
 	
 	private String pin; 
@@ -52,27 +63,26 @@ public class User implements Serializable {
 	@OneToOne(mappedBy="user", cascade = CascadeType.ALL)
 	private Configuration configuration; 
     
-//	
-//	@OneToMany(mappedBy="user")
-//	private Set<Session> sessions;
-//	
+
+	@OneToMany(mappedBy="user" ,cascade = CascadeType.ALL)
+	private Set<Session> sessions;
+
 	
 	public User () {};
 	
 	public User(String phone, String password, String city, String state, String email, String first_name,
-			String last_name, String address, String latitude, String longitude, Date created_at) {
+			String last_name, String address, String latitude, String longitude) {
 		super();
 		this.phone = phone;
 		this.password = password;
 		this.city = city;
 		this.state = state;
 		this.email = email;
-		this.first_name = first_name;
-		this.last_name = last_name;
+		this.firstName = first_name;
+		this.lastName= last_name;
 		this.address = address;
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.created_at = created_at;
 	}
 	
 	public Long getId() {
@@ -111,18 +121,23 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getFirst_name() {
-		return first_name;
+
+	public String getFirstName() {
+		return firstName;
 	}
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-	public String getLast_name() {
-		return last_name;
+
+	public String getLastName() {
+		return lastName;
 	}
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -172,6 +187,14 @@ public class User implements Serializable {
 
 	public void setConfiguration(Configuration configuration) {
 		this.configuration = configuration;
+	}
+
+	public Set<Session> getSessions() {
+		return sessions;
+	}
+
+	public void setSessions(Set<Session> sessions) {
+		this.sessions = sessions;
 	}
 	
 
