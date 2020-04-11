@@ -18,6 +18,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name="users")
@@ -36,6 +38,7 @@ public class User implements Serializable {
 	@Column(name="password", nullable = false)
 	private String password; 
 	
+	// editable after login ... profile
 	private String city; 
 	private String state; 
 	private String email; 
@@ -48,12 +51,11 @@ public class User implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
-	private Date created_at; 
+	private Date createdAt; 
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_at")
- 
-	private Date updated_at; 
+	@Column(name = "updated_at") 
+	private Date updatedAt; 
 	
 	private String pin; 
 	private int deteled ;
@@ -61,10 +63,12 @@ public class User implements Serializable {
 	
 	
 	@OneToOne(mappedBy="user", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private Configuration configuration; 
     
 
 	@OneToMany(mappedBy="user" ,cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private Set<Session> sessions;
 
 	
@@ -156,17 +160,17 @@ public class User implements Serializable {
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
-	public Date getCreated_at() {
-		return created_at;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
-	public void setCreated_at(Date created_at) {
-		this.created_at = created_at;
+	public void setCreated_at(Date createdAt) {
+		this.createdAt = createdAt;
 	}
-	public Date getUpdated_at() {
-		return updated_at;
+	public Date getUpdatedAt() {
+		return updatedAt;
 	}
-	public void setUpdated_at(Date updated_at) {
-		this.updated_at = updated_at;
+	public void setUpdated_at(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 	public String getPin() {
 		return pin;

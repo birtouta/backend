@@ -6,8 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.birtouta.BirtoutaApplication;
+import com.birtouta.dao.ConfigurationRepository;
 import com.birtouta.dao.SessionRepository;
 import com.birtouta.dao.UserRepository;
+import com.birtouta.entities.Configuration;
 import com.birtouta.entities.Session;
 import com.birtouta.entities.User;
 import com.birtouta.services.*;
@@ -19,6 +21,9 @@ public class BirtoutaApplication implements CommandLineRunner {
 	
 	@Autowired
 	private SessionRepository sessionRepository; 
+	
+	@Autowired
+	private ConfigurationRepository configurationRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BirtoutaApplication.class, args);
@@ -44,6 +49,15 @@ public class BirtoutaApplication implements CommandLineRunner {
 		s.setUser(oussama);
 		
 		sessionRepository.save(s);
+		
+		Configuration  configuration= new Configuration(); 
+		configuration.setLastVersion("2.1.1");
+		configuration.setUser(oussama);
+		
+		configurationRepository.save(configuration); 
+		
+		
+		
 		
 		userRepository.findAll().forEach(user -> {
 			System.out.println(user.getPhone() +" => " + user.getFirstName() +" => " + user.getLastName() );

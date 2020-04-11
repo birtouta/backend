@@ -5,6 +5,11 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name="configs")
@@ -14,25 +19,29 @@ public class Configuration implements Serializable {
 	@Column(name="id")
 	private Long id;
 	
-	private String last_version; 
+	private String lastVersion; 
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date created_at; 
+	@Column(name = "created_at", nullable = false, updatable = false)
+    @CreationTimestamp
+	private Date createdAt; 
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date updated_at; 
+	@Column(name = "updated_at")
+	private Date updatedAt; 
 	
 	@OneToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="id_user")
+	@JsonBackReference
 	private User user;
 	   
 	
 	public Configuration () {};	
 
-	public Configuration(String last_version, Date created_at, User user) {
+	public Configuration(String lastVersion, Date createdAt, User user) {
 		super();
-		this.last_version = last_version;
-		this.created_at = created_at;
+		this.lastVersion = lastVersion;
+		this.createdAt = createdAt;
 		this.user = user;
 	}
 
@@ -44,28 +53,28 @@ public class Configuration implements Serializable {
 		this.id = id;
 	}
 
-	public String getLast_version() {
-		return last_version;
+	public String getLastVersion() {
+		return lastVersion;
 	}
 
-	public void setLast_version(String last_version) {
-		this.last_version = last_version;
+	public void setLastVersion(String lastVersion) {
+		this.lastVersion = lastVersion;
 	}
 
-	public Date getCreated_at() {
-		return created_at;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setCreated_at(Date created_at) {
-		this.created_at = created_at;
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
-	public Date getUpdated_at() {
-		return updated_at;
+	public Date getUpdatedAt() {
+		return updatedAt;
 	}
 
-	public void setUpdated_at(Date updated_at) {
-		this.updated_at = updated_at;
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	public User getUser() {

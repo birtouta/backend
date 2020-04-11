@@ -7,6 +7,8 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="sessions")
 public class Session implements Serializable{
@@ -24,11 +26,12 @@ public class Session implements Serializable{
 	private String smartphone;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "createdAt", nullable = false, updatable = false)
+	@Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
 	private Date createdAt;  
 	
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "upadated_at")
 	private Date updatedAt; 
 	
 	@Temporal(TemporalType.TIMESTAMP)
@@ -40,6 +43,7 @@ public class Session implements Serializable{
 	
 	@ManyToOne
     @JoinColumn(name="id_user")
+	@JsonBackReference
     private User user;
 
 	public Session() {}
