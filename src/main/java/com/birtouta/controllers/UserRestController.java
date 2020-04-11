@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path="/user") 
 public class UserRestController {
+
+	//Ceci est un commentaire
 	@Autowired
 	private UserRepository userRepository;
 	

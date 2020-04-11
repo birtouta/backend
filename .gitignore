@@ -13,6 +13,7 @@
 
 # Maven
 log/
+<<<<<<< HEAD
 target/# Eclipse
 .classpath
 .project
@@ -28,4 +29,6 @@ target/# Eclipse
 
 # Maven
 log/
+=======
+>>>>>>> origin/mourad
 target/
