@@ -46,6 +46,7 @@ public class BirtoutaApplication implements CommandLineRunner {
 		s.setPlatform("android");
 		s.setSmartphone("Redmi note 7");
 		s.setFcm_token("qlkdsjfmqlkjfmqlkdfqs5d1f3q1f6q5dsf");
+		s.setToken("ED9CEFBCCB0D0CE41084009FAE7F2D363439F6224DDADBCDB0E509646E593F13");
 		s.setUser(oussama);
 		
 		sessionRepository.save(s);
