@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -45,15 +46,16 @@ public class OrderController {
         return new ResponseEntity<OrderDTO>(orderDTO, HttpStatus.OK);
     }
 
-//    @GetMapping(path = "/all")
-//    public @ResponseBody ResponseEntity<?> getAllUsers(@RequestHeader("Token") String token) {
-//        Session session = sessionRepository.findByToken(token);
-//        if (session == null) {
-//            return new ResponseEntity<String>("Unauthorized Token", HttpStatus.UNAUTHORIZED);
-//        } else {
-//            User user = session.getUser();
-////            List<Order> orders=user.getO
-//            return orderService.getAllOrders();
-//        }
-//    }
+    @GetMapping(path = "/all")
+    public @ResponseBody ResponseEntity<?> getAllUsers(@RequestHeader("Token") String token) {
+        Session session = sessionRepository.findByToken(token);
+        if (session == null) {
+            return new ResponseEntity<String>("Unauthorized Token", HttpStatus.UNAUTHORIZED);
+        } else {
+            User user = session.getUser();
+            List<Order> orders=user.getOrders();
+            List<OrderDTO> dtos = ObjectMapperUtils.mapAll(orders, OrderDTO.class);
+            return new ResponseEntity<OrderDTO>((OrderDTO) dtos, HttpStatus.OK);
+        }
+    }
 }
