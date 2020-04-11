@@ -11,4 +11,8 @@ public class Delivery implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id")
 	private Long id;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_order")
+	private Order order;
 }
