@@ -14,6 +14,7 @@
 /home/ghost/workstation/spring/birtouta/src/main/java/com/birtouta/controllers/SingupRestController.java
 /home/ghost/workstation/spring/birtouta/src/main/java/com/birtouta/entities/StoreWorker.java
 /home/ghost/workstation/spring/birtouta/src/main/java/com/birtouta/BirtoutaApplication.java
+/home/ghost/workstation/spring/birtouta/src/main/java/com/birtouta/controllers/ConfigRestController.java
 /home/ghost/workstation/spring/birtouta/src/main/java/com/birtouta/dao/OrderProductRepository.java
 /home/ghost/workstation/spring/birtouta/src/main/java/com/birtouta/controllers/SessionRestController.java
 /home/ghost/workstation/spring/birtouta/src/main/java/com/birtouta/entities/OrderProduct.java

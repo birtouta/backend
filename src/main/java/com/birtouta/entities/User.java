@@ -1,24 +1,14 @@
 package com.birtouta.entities;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @SuppressWarnings("serial")
 @Entity
@@ -58,21 +48,38 @@ public class User implements Serializable {
 	private Date updatedAt; 
 	
 	private String pin; 
-	private int deteled ;
-	
-	
+	private int deteled ;	
 	
 	@OneToOne(mappedBy="user", cascade = CascadeType.ALL)
 	@JsonManagedReference
-	private Configuration configuration; 
-    
+	private Configuration configuration;     
 
-	@OneToMany(mappedBy="user" ,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="user" ,fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
 	@JsonManagedReference
-	private Set<Session> sessions;
-
+	private List<Session> sessions;
 	
-	public User () {};
+	@OneToOne(mappedBy="user", cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private Store store; 
+	
+	@OneToMany(mappedBy="user" ,fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private List<Order> orders;
+	
+	@OneToMany(mappedBy="userDeliver", cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private List<Delivery> delivery; 
+	
+	@OneToMany(mappedBy="userTarget" ,fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private List<Delivery> deliveries;
+	
+	@OneToOne(mappedBy="user" ,cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private StoreWorker storeWorker;
+	
+	
+		public User () {};
 	
 	public User(String phone, String password, String city, String state, String email, String first_name,
 			String last_name, String address, String latitude, String longitude) {
@@ -193,12 +200,60 @@ public class User implements Serializable {
 		this.configuration = configuration;
 	}
 
-	public Set<Session> getSessions() {
+	public List<Session> getSessions() {
 		return sessions;
 	}
 
-	public void setSessions(Set<Session> sessions) {
+	public void setSessions(List<Session> sessions) {
 		this.sessions = sessions;
+	}
+	
+	public Store getStore() {
+		return store;
+	}
+
+	public void setStore(Store store) {
+		this.store = store;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+	
+	public List<Delivery> getDelivery() {
+		return delivery;
+	}
+
+	public void setDelivery(List<Delivery> delivery) {
+		this.delivery = delivery;
+	}
+
+	public List<Delivery> getDeliveries() {
+		return deliveries;
+	}
+
+	public void setDeliveries(List<Delivery> deliveries) {
+		this.deliveries = deliveries;
+	}
+
+	public StoreWorker getStoreWorker() {
+		return storeWorker;
+	}
+
+	public void setStoreWorker(StoreWorker storeWorker) {
+		this.storeWorker = storeWorker;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 	
 
