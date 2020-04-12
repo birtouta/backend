@@ -9,11 +9,13 @@ import javax.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name="stores")
+@JsonIgnoreProperties({"user","deliveries", "storeWorkers","orders"})
 public class Store implements Serializable {
 	
 	@Id 

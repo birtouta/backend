@@ -7,10 +7,11 @@ import com.birtouta.entities.User;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class OrderDTO {
+public class OrderDTO implements Serializable {
 
     private Long id;
     private Date createdAt;

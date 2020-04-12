@@ -6,9 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.birtouta.dao.SessionRepository;
-import com.birtouta.dao.UserRepository;
 import com.birtouta.entities.Session;
-import com.birtouta.entities.User;
 import com.birtouta.services.Metier;
 
 @RestController
