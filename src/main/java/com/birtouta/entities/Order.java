@@ -1,14 +1,13 @@
 package com.birtouta.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="orders")
@@ -47,15 +46,11 @@ public class Order  implements Serializable{
 
 
 	@ManyToOne
-	@JoinColumn(name="id_store", referencedColumnName = "id")
-	private Store store;
-
 	@JoinColumn(name="id_store")
 	@JsonBackReference
 	private Store store;
 
 	@ManyToOne
-	@JoinColumn(name="id_user", referencedColumnName = "id")
 	@JoinColumn(name="id_user")
 	@JsonBackReference
 	private User user;
