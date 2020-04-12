@@ -1,6 +1,9 @@
 package com.birtouta.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -9,9 +12,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="orders")
+@JsonIgnoreProperties({"user", "orderProducts", "delivery"})
 public class Order  implements Serializable{
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id")
@@ -25,6 +31,12 @@ public class Order  implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at")
 	private Date updatedAt;
+	
+	private int validated; 
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "validated_at")
+	private Date validatedAt;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "received_at")
@@ -44,17 +56,6 @@ public class Order  implements Serializable{
 
 	private int approved ;
 
-
-	@ManyToOne
-	@JoinColumn(name="id_store")
-	@JsonBackReference
-	private Store store;
-
-	@ManyToOne
-	@JoinColumn(name="id_user")
-	@JsonBackReference
-	private User user;
-
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "approved_at")
 	private Date approvedAt;
@@ -71,12 +72,25 @@ public class Order  implements Serializable{
 	@Column(name = "canceled_at")
 	private Date canceledAt;
 
+	@Column(name = "type_delivers")
 	private int typeDelivery ;
 
+	@ManyToOne
+	@JoinColumn(name="id_store")
+//	@JsonBackReference
+	private Store store;
+
+	@ManyToOne
+	@JoinColumn(name="id_user")
+	@JsonBackReference
+	private User user;
+
 	@OneToMany(mappedBy="order" , fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
 	private List<OrderProduct> orderProducts;
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "order")
+	@JsonManagedReference
 	private Delivery delivery;
 
 	public Order() {

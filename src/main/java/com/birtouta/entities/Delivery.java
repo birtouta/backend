@@ -5,10 +5,13 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name="deliveries")
+@JsonIgnoreProperties({"userTarget","userDeliver", "store", "order"})
+
 public class Delivery implements Serializable{
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -16,12 +19,12 @@ public class Delivery implements Serializable{
 	private Long id;
 	
 	@ManyToOne
-    @JoinColumn(name="id_target", nullable=false, updatable=false)
+    @JoinColumn(name="id_target",referencedColumnName = "id", nullable=false, updatable=false)
 	@JsonBackReference
     private User userTarget;
 	
 	@ManyToOne
-    @JoinColumn(name="id_deliver")
+    @JoinColumn(name="id_deliver", referencedColumnName = "id", nullable=false, updatable=false)
 	@JsonBackReference
     private User userDeliver;
 	

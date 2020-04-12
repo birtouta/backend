@@ -7,13 +7,14 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name="users")
-
+@JsonIgnoreProperties({"configuration","sessions", "store", "orders", "delivery", "deliveries", "storeWorker"})
 public class User implements Serializable {
 	
 
@@ -48,7 +49,7 @@ public class User implements Serializable {
 	private Date updatedAt; 
 	
 	private String pin; 
-	private int deteled ;	
+	private int deleted ;
 	
 	@OneToOne(mappedBy="user", cascade = CascadeType.ALL)
 	@JsonManagedReference
@@ -79,7 +80,7 @@ public class User implements Serializable {
 	private StoreWorker storeWorker;
 	
 	
-		public User () {};
+	public User () {};
 	
 	public User(String phone, String password, String city, String state, String email, String first_name,
 			String last_name, String address, String latitude, String longitude) {
@@ -185,11 +186,11 @@ public class User implements Serializable {
 	public void setPin(String pin) {
 		this.pin = pin;
 	}
-	public int getDeteled() {
-		return deteled;
+	public int getDeleted() {
+		return deleted;
 	}
-	public void setDeteled(int deteled) {
-		this.deteled = deteled;
+	public void setDeleted(int deleted) {
+		this.deleted = deleted;
 	}
 
 	public Configuration getConfiguration() {

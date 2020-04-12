@@ -8,11 +8,7 @@ import com.birtouta.entities.Session;
 import com.birtouta.entities.User;
 import com.birtouta.services.Metier;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,64 +25,65 @@ public class UserRestController {
 	private SessionRepository sessionRepository;
 	
 	@PostMapping(path="/addUser")
-	public @ResponseBody String addNewUser (@RequestParam(required = true) String phone, @RequestParam(required = true) String password) {
+	public ResponseEntity<?> addNewUser (@RequestBody User user, @RequestHeader("Token") String token) {
 		
-		User u = userRepository.findByPhone(phone) ;
 		
-		if (! u.getPhone().isEmpty()) {
-			return "{\"success\":0, \"message\": \"user's phone number already exist in the database !\"}";
+		Session session = sessionRepository.findByToken(token);
+		if(session == null) {
+			return new ResponseEntity<String>("Unauthorized Token", HttpStatus.UNAUTHORIZED);
 		}else {
-		
-			User n = new User();
-			n.setPhone(phone);
-			n.setEmail(password);
-			n.setCreated_at(Metier.getCurrentTimestamp());
-			userRepository.save(n);
-			return "{\"success\":1}";
+			
+			User u = userRepository.findByPhone(user.getPhone()) ;
+			
+			if (u != null) {
+				return new ResponseEntity<String>("{\"success\":0, \"message\": \"user's phone number already exist in the database !\"}", HttpStatus.UNAUTHORIZED);
+			}else {
+				userRepository.save(user);
+				return new ResponseEntity<User>(userRepository.save(user), HttpStatus.OK);
+			}		
 		}
+		
 	}
 	
-	@DeleteMapping(path="/disableUser") 
-
-	public @ResponseBody String disableUser (@RequestParam(required = true) String phone) {
+	@DeleteMapping(path="/disableUser")
+	public ResponseEntity<?> disableUser (@RequestParam(required = true) String phone) {
 		
 		User u = userRepository.findByPhone(phone) ;
 		System.out.println(u);
 		
 		if (u == null) {
-			return "{\"success\":0, "
-					+ "\"message\": \"user's phone number does not exist in the database !\"}";
+			return new ResponseEntity<String>("{\"success\":0, "
+					+ "\"message\": \"user's phone number does not exist in the database !\"}", HttpStatus.UNAUTHORIZED);
 		}else {
 		
-			u.setDeteled(1);
+			u.setDeleted(1);
 			u.setUpdated_at(Metier.getCurrentTimestamp());
 			userRepository.save(u);
-			return "{\"success\":1,"
-					+ "\"message\": \"the user has been disabled !\"}";
+			return new ResponseEntity<String>("{\"success\":1,"
+					+ "\"message\": \"the user has been disabled !\"}", HttpStatus.OK);
 		}
 	}
 	
-	@PutMapping(path="/enableUser") 
-
-	public @ResponseBody String enableUser (@RequestParam(required = true) String phone) {
+	@PutMapping(path="/enableUser")
+	public ResponseEntity<?>  enableUser (@RequestParam(required = true) String phone) {
 		
 		User u = userRepository.findByPhone(phone) ;
 		System.out.println(u);
 		
 		if (u == null) {
-			return "{\"success\":0, "
-					+ "\"message\": \"user's phone number does not exist in the database !\"}";
+			return new ResponseEntity<String> ("{\"success\":0, "
+					+ "\"message\": \"user's phone number does not exist in the database !\"}", HttpStatus.UNAUTHORIZED);
 		}else {
-			u.setDeteled(0);
+			u.setDeleted(0);
 			u.setUpdated_at(Metier.getCurrentTimestamp());
 			userRepository.save(u);
-			return "{\"success\":1,"
-					+ "\"message\": \"the user has been enabled !\"}";
+			return new ResponseEntity<String> ("{\"success\":1,"
+					+ "\"message\": \"the user has been enabled !\"}", HttpStatus.OK);
 		}
 	}
 	
 	@PutMapping(path="/updateUser") 
-	public @ResponseBody ResponseEntity<?> updateUser (@RequestBody User user, @RequestHeader("Token") String token ) {
+	public ResponseEntity<?> updateUser (@RequestBody User user, @RequestHeader("Token") String token ) {
 		Session session = sessionRepository.findByToken(token);
 		if(session == null) {
 			return new ResponseEntity<String>("Unauthorized Token", HttpStatus.UNAUTHORIZED);
@@ -101,7 +98,7 @@ public class UserRestController {
 	}
 	
 	@PostMapping(path="/checkphone")
-	public @ResponseBody ResponseEntity<?> checkUserPhone (@RequestParam(required = true) String phone, @RequestHeader("Token") String token ) {
+	public ResponseEntity<?> checkUserPhone (@RequestParam(required = true) String phone, @RequestHeader("Token") String token ) {
 		
 		Session session = sessionRepository.findByToken(token);
 		if(session == null) {
@@ -123,9 +120,14 @@ public class UserRestController {
 	
 //	@GetMapping(path="/allUsers")
 	@GetMapping(path="/all")
-	public @ResponseBody Iterable<User> getAllUsers() {
-	// This returns a JSON or XML with the users
-	return userRepository.findAll();
+	public ResponseEntity<?> getAllUsers(@RequestHeader("Token") String token) {
+		Session session = sessionRepository.findByToken(token);
+		System.out.println(session.toString());
+		if(session == null) {
+			return new ResponseEntity<String>("Unauthorized Token", HttpStatus.UNAUTHORIZED);
+		}else {
+			return new ResponseEntity<List<User>> (userRepository.findAll(), HttpStatus.OK);
+		}
 	}
 }
 
