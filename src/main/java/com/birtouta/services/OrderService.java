@@ -7,7 +7,6 @@ import com.birtouta.mapper.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,12 +19,11 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public List<OrderDTO> getAllOrders(){
-        List<Order> dtoList=new ArrayList<>();
-        Iterable<Order> orders = orderRepository.findAll();
-        for (Order str : orders) {
-            dtoList.add(str);
-        }
-        return ObjectMapperUtils.mapAll(dtoList,OrderDTO.class);
+    public Order findById(Long id){
+        return orderRepository.getById(id);
+    }
+
+    public List<Order> getAllOrders(){
+        return orderRepository.findAll();
     }
 }
