@@ -10,10 +10,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "order_products")
-@JsonIgnoreProperties({"order", "productCategory"})
 @NamedQueries({
-        @NamedQuery(name = "OrderProduct.findAllProductsByOrder", query = "SELECT p FROM OrderProduct p where p.order =:id_order")
+        @NamedQuery(name = "OrderProduct.findAllProductsByOrder", query = "SELECT p FROM OrderProduct p where p.order.id =:id_order")
 })
+@JsonIgnoreProperties({"order", "productCategory"})
 public class OrderProduct implements Serializable {
 
     @Id
@@ -27,20 +27,20 @@ public class OrderProduct implements Serializable {
     @Column(name = "quantity", precision = 24, scale = 4)
     private BigDecimal quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "id_order", referencedColumnName = "id")
-    @JsonBackReference
-    private Order order;
-
-    @ManyToOne
-    @JoinColumn(name = "id_Product_category", referencedColumnName = "id")
-    @JsonBackReference
-    private ProductCategory productCategory;
-
     private String note;
 
     @Column(name = "photo", length = 255)
     private String photo;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_order")
+    @JsonBackReference(value="order")
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "id_Product_category")
+    @JsonBackReference(value="productCategory")
+    private ProductCategory productCategory;
 
     public OrderProduct() {
     }
