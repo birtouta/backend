@@ -20,12 +20,12 @@ public class ConfigRestController {
 	@Autowired
 	SessionRepository sessionRepository ;
 	
-	@PostMapping(path="/addconfig")
+	@PostMapping(path="/add")
 	public ResponseEntity<?> addConfig (@RequestBody Configuration configuration){
 		return new ResponseEntity<Configuration>(configurationRepository.save(configuration), HttpStatus.OK); 
 	}
 	
-	@PostMapping(path="/getconfig")
+	@PostMapping(path="/get")
 	public ResponseEntity<?> getConfig (@RequestHeader("Token") String token){
 		Session session = sessionRepository.findByToken(token);
 		if(session == null) {

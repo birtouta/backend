@@ -24,7 +24,7 @@ public class UserRestController {
 	@Autowired
 	private SessionRepository sessionRepository;
 	
-	@PostMapping(path="/addUser")
+	@PostMapping(path="/add")
 	public ResponseEntity<?> addNewUser (@RequestBody User user, @RequestHeader("Token") String token) {
 		
 		
@@ -45,7 +45,7 @@ public class UserRestController {
 		
 	}
 	
-	@DeleteMapping(path="/disableUser")
+	@DeleteMapping(path="/disable")
 	public ResponseEntity<?> disableUser (@RequestParam(required = true) String phone) {
 		
 		User u = userRepository.findByPhone(phone) ;
@@ -64,7 +64,7 @@ public class UserRestController {
 		}
 	}
 	
-	@PutMapping(path="/enableUser")
+	@PutMapping(path="/enable")
 	public ResponseEntity<?>  enableUser (@RequestParam(required = true) String phone) {
 		
 		User u = userRepository.findByPhone(phone) ;
@@ -82,7 +82,7 @@ public class UserRestController {
 		}
 	}
 	
-	@PutMapping(path="/updateUser") 
+	@PutMapping(path="/update") 
 	public ResponseEntity<?> updateUser (@RequestBody User user, @RequestHeader("Token") String token ) {
 		Session session = sessionRepository.findByToken(token);
 		if(session == null) {
@@ -122,7 +122,6 @@ public class UserRestController {
 	@GetMapping(path="/all")
 	public ResponseEntity<?> getAllUsers(@RequestHeader("Token") String token) {
 		Session session = sessionRepository.findByToken(token);
-		System.out.println(session.toString());
 		if(session == null) {
 			return new ResponseEntity<String>("Unauthorized Token", HttpStatus.UNAUTHORIZED);
 		}else {

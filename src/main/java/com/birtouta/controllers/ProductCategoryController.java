@@ -22,7 +22,7 @@ public class ProductCategoryController {
     @Autowired
     private SessionRepository sessionRepository;
 
-    @PostMapping(path = "/addProductCategory")
+    @PostMapping(path = "/add")
     public ResponseEntity<?> addNewProductCategory(@RequestBody ProductCategory productCategory, @RequestHeader("Token") String token) {
 
         Session session = sessionRepository.findByToken(token);
@@ -34,7 +34,7 @@ public class ProductCategoryController {
         }
     }
 
-    @PutMapping(path = "/updateProductCategory")
+    @PutMapping(path = "/update")
     public ResponseEntity<?> updateProductCategory(@RequestBody ProductCategory productCategory, @RequestHeader("Token") String token) {
 
         Session session = sessionRepository.findByToken(token);
@@ -46,7 +46,7 @@ public class ProductCategoryController {
         }
     }
 
-    @DeleteMapping(path="/deleteProductCategory")
+    @DeleteMapping(path="/delete")
     public ResponseEntity<?> deleteProductCategory (@RequestParam Long id_product_category,@RequestHeader("Token") String token) {
 
         Session session = sessionRepository.findByToken(token);

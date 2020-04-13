@@ -35,7 +35,7 @@ public class OrderController {
     @Autowired
     private OrderProductService orderProductService;
 
-    @PostMapping(path = "/addOrder")
+    @PostMapping(path = "/add")
     public ResponseEntity<?> addNewOrder(@RequestParam Long id_store, @RequestHeader("Token") String token) {
 
         Session session = sessionRepository.findByToken(token);
@@ -51,7 +51,7 @@ public class OrderController {
         }
     }
 
-    @PutMapping(path = "/updateOrder")
+    @PutMapping(path = "/update")
     public @ResponseBody
     ResponseEntity<?> updateOrder(@Valid @RequestBody OrderDTO orderDTO) {
         Order users = orderService.saveOrUpdateOrder(orderDTO);
