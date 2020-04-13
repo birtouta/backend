@@ -62,9 +62,36 @@ public class BirtoutaApplication implements CommandLineRunner {
 		configuration.setUser(oussama);
 		configurationRepository.save(configuration); 		
 		
-		Store store = new Store();
-		store.setUser(dahman);
-		storeRepository.save(store);
+		Store store1 = new Store();
+		store1.setName("Superette Akacha");
+		store1.setLatitude("36.647139");
+		store1.setLongitude("2.994101");
+		storeRepository.save(store1);
+		
+		Store store2 = new Store();
+		store2.setName("Superette Ihamouine");
+		store2.setLatitude("36.643592");
+		store2.setLongitude("2.993837");
+		storeRepository.save(store2);
+		
+		Store store3 = new Store();
+		store3.setName("Superette Zaidi");
+		store3.setLatitude("36.643592");
+		store3.setLongitude("2.993837");
+		storeRepository.save(store3);
+
+		Store store4 = new Store();
+		store4.setName("Superette DOUAA");
+		store4.setLatitude("36.642288");
+		store4.setLongitude("2.991084");
+		storeRepository.save(store4);
+
+		Store store5 = new Store();
+		store5.setName("Superette Walid");
+		store5.setLatitude("36.648629");
+		store5.setLongitude("2.985279");
+		storeRepository.save(store5);		
+		
 		
 		
 		userRepository.findAll().forEach(user -> {
