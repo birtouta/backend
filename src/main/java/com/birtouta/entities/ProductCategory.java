@@ -1,5 +1,7 @@
 package com.birtouta.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.ToString;
 
@@ -12,6 +14,7 @@ import java.util.Objects;
 @Table(name="prodcut_categories")
 @Data
 @ToString
+@JsonIgnoreProperties({"orderProducts"})
 public class ProductCategory implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -22,7 +25,8 @@ public class ProductCategory implements Serializable {
 	private String translatedEn;
 	private String translatedKb;
 
-	@OneToMany(mappedBy="productCategory" , fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy="productCategory" , fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<OrderProduct> orderProducts;
 
 	public ProductCategory() {
