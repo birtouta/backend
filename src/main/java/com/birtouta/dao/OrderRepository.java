@@ -1,11 +1,10 @@
 package com.birtouta.dao;
 
-import org.springframework.data.repository.CrudRepository;
+import com.birtouta.entities.Order;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.birtouta.entities.Order;
-
 @Repository
-public interface OrderRepository extends CrudRepository<Order, Long>{
-
+public interface OrderRepository extends JpaRepository<Order, Long> {
+    Order getById(Long id);
 }
