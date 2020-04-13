@@ -19,8 +19,11 @@ public class OrderProductService {
 
     public OrderProduct saveOrUpdateOrderProduct(OrderProduct orderProduct, Long id_order) {
         Order order = orderRepository.getById(id_order);
-        orderProduct.setOrder(order);
-        return orderProductRepository.save(orderProduct);
+        if (order != null) {
+        	orderProduct.setOrder(order);
+        	return orderProductRepository.save(orderProduct);
+         }
+        return null; 
     }
 
     public void saveAllOrderProducts(Order order) {

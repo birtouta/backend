@@ -24,6 +24,9 @@ public class BirtoutaApplication implements CommandLineRunner {
 	@Autowired
 	private StoreRepository storeRepository;
 	
+	@Autowired
+	private ProductCategoryRepository productCategoryRepository; 
+	
 	public static void main(String[] args) {
 		SpringApplication.run(BirtoutaApplication.class, args);
 	}
@@ -90,7 +93,36 @@ public class BirtoutaApplication implements CommandLineRunner {
 		store5.setName("Superette Walid");
 		store5.setLatitude("36.648629");
 		store5.setLongitude("2.985279");
-		storeRepository.save(store5);		
+		storeRepository.save(store5);	
+		
+		ProductCategory pc = new ProductCategory(); 
+		pc.setName("pâtes alimentaires"); 
+		productCategoryRepository.save(pc); 
+		ProductCategory pc1 = new ProductCategory(); 
+		pc1.setName("Les conserves"); 
+		productCategoryRepository.save(pc1);
+
+
+		ProductCategory pc2 = new ProductCategory(); 
+		pc2.setName("Jus et Boissons Gazeuses"); 
+		productCategoryRepository.save(pc2);
+
+
+		ProductCategory pc3 = new ProductCategory(); 
+		pc3.setName("Biscui et gâteaux"); 
+		productCategoryRepository.save(pc3);
+
+		ProductCategory pc4 = new ProductCategory(); 
+		pc4.setName("Détergents"); 
+		productCategoryRepository.save(pc4);
+
+		ProductCategory pc5 = new ProductCategory(); 
+		pc5.setName("Fruits et Légumes"); 
+		productCategoryRepository.save(pc5);
+
+		ProductCategory pc6 = new ProductCategory(); 
+		pc6.setName("Autres"); 
+		productCategoryRepository.save(pc6);	
 		
 		
 		

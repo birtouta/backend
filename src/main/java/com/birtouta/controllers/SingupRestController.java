@@ -21,7 +21,7 @@ public class SingupRestController {
 	@Autowired
 	private UserRepository userRepository; 
 	
-	@PostMapping(path="/singnup")
+	@PostMapping(path="/signup")
 	public ResponseEntity<?>  signIn(@RequestBody User user ,@RequestHeader("Token") String token) {
 		Session session = sessionRepository.findByToken(token);
 		

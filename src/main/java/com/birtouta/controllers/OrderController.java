@@ -70,8 +70,8 @@ public class OrderController {
         }
     }
 
-    @GetMapping(path = "/getOrderProducts")
-    public ResponseEntity<?> getOrderProducts(@PathVariable Long id_order,@RequestHeader("Token") String token) {
+    @GetMapping(path = "/getOrderProducts/{id}")
+    public ResponseEntity<?> getOrderProducts(@PathVariable("id") Long id_order,@RequestHeader("Token") String token) {
         Session session = sessionRepository.findByToken(token);
         if (session == null) {
             return new ResponseEntity<String>("Unauthorized Token", HttpStatus.UNAUTHORIZED);

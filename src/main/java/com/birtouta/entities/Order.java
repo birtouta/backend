@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import lombok.Data;
+
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -14,8 +16,10 @@ import java.util.Objects;
 
 @SuppressWarnings("serial")
 @Entity
+@Data
 @Table(name="orders")
-@JsonIgnoreProperties({"user", "orderProducts", "delivery"})
+@JsonIgnoreProperties({"store", "user", "delivery"})
+
 public class Order  implements Serializable{
 
 	@Id
@@ -77,20 +81,20 @@ public class Order  implements Serializable{
 
 	@ManyToOne
 	@JoinColumn(name="id_store")
-//	@JsonBackReference
+	@JsonBackReference(value="store")
 	private Store store;
 
 	@ManyToOne
 	@JoinColumn(name="id_user")
-	@JsonBackReference
+	@JsonBackReference(value="user")
 	private User user;
 
 	@OneToMany(mappedBy="order" , fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonManagedReference
+	@JsonManagedReference(value="orderProducts")
 	private List<OrderProduct> orderProducts;
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "order")
-	@JsonManagedReference
+	@JsonManagedReference(value="delivery")
 	private Delivery delivery;
 
 	public Order() {
