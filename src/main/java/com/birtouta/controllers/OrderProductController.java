@@ -24,7 +24,7 @@ public class OrderProductController {
     @Autowired
     private OrderProductRepository orderProductRepository ;
 
-    @PostMapping(path = "/addOrderProduct")
+    @PostMapping(path = "/add")
     public ResponseEntity<?> addNewOrderProduct(@RequestBody OrderProduct orderProduct, @RequestParam("id_order") Long id_order, @RequestHeader("Token") String token) {
 
         Session session = sessionRepository.findByToken(token);
@@ -39,7 +39,7 @@ public class OrderProductController {
         }
     }
     
-    @PostMapping(path = "/addAllOrderProducts")
+    @PostMapping(path = "/addAll")
     public ResponseEntity<?> addAllOrderProducts(@RequestBody Order order, @RequestHeader("Token") String token) {
 
         Session session = sessionRepository.findByToken(token);

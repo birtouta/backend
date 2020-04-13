@@ -28,7 +28,7 @@ public class SessionRestController {
 	private SessionRepository sessionRepository; 
 	
 	
-	@PostMapping(path="/addsession")
+	@PostMapping(path="/add")
 	public @ResponseBody Session addSession(@RequestBody Session session) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
 		String hash  = Metier.generateTokenHash();		
@@ -36,7 +36,7 @@ public class SessionRestController {
 		return sessionRepository.save(session);
 	}
 	
-	@PatchMapping(path="/updatesession")
+	@PatchMapping(path="/update")
 	public ResponseEntity<?>  updateSession(@RequestBody Session session,  @RequestHeader("Token") String token) {
 		
 		Session s = sessionRepository.findByToken(token);
@@ -61,7 +61,7 @@ public class SessionRestController {
 		}
 	}
 	
-	@DeleteMapping(path="/deletesession")
+	@DeleteMapping(path="/delete")
 	public ResponseEntity<?>  deleteSession(@RequestHeader("Token") String token) {
 		
 		Session s = sessionRepository.findByToken(token);
