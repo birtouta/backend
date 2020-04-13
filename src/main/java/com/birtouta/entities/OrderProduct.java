@@ -1,127 +1,125 @@
 package com.birtouta.entities;
 
-import lombok.Data;
-import lombok.ToString;
-
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@Table(name="order_products")
-@JsonIgnoreProperties({"order","productCategory"})
+@Table(name = "order_products")
+@JsonIgnoreProperties({"order", "productCategory"})
+@NamedQueries({
+        @NamedQuery(name = "OrderProduct.findAllProductsByOrder", query = "SELECT p FROM OrderProduct p where p.order =:id_order")
+})
 public class OrderProduct implements Serializable {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
 
-	private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	private String details;
+    private String name;
 
-	@Column(name = "quantity", precision = 24, scale = 4)
-	private BigDecimal quantity;
+    private String details;
 
-	@ManyToOne
-	@JoinColumn(name="id_order", referencedColumnName = "id")
-	@JsonBackReference
-	private Order order;
+    @Column(name = "quantity", precision = 24, scale = 4)
+    private BigDecimal quantity;
 
-	@ManyToOne
-	@JoinColumn(name="id_Product_category", referencedColumnName = "id")
-	@JsonBackReference
-	private ProductCategory productCategory;
+    @ManyToOne
+    @JoinColumn(name = "id_order", referencedColumnName = "id")
+    @JsonBackReference
+    private Order order;
 
-	private String note;
+    @ManyToOne
+    @JoinColumn(name = "id_Product_category", referencedColumnName = "id")
+    @JsonBackReference
+    private ProductCategory productCategory;
 
-	@Column(name = "photo", length = 255)
-	private String photo;
+    private String note;
 
-	public OrderProduct() {
-	}
+    @Column(name = "photo", length = 255)
+    private String photo;
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		OrderProduct that = (OrderProduct) o;
-		return id.equals(that.id);
-	}
+    public OrderProduct() {
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-	
-	public Long getId() {
-		return id;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderProduct that = (OrderProduct) o;
+        return id.equals(that.id);
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getDetails() {
-		return details;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setDetails(String details) {
-		this.details = details;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public BigDecimal getQuantity() {
-		return quantity;
-	}
+    public String getDetails() {
+        return details;
+    }
 
-	public void setQuantity(BigDecimal quantity) {
-		this.quantity = quantity;
-	}
+    public void setDetails(String details) {
+        this.details = details;
+    }
 
-	public Order getOrder() {
-		return order;
-	}
+    public BigDecimal getQuantity() {
+        return quantity;
+    }
 
-	public void setOrder(Order order) {
-		this.order = order;
-	}
+    public void setQuantity(BigDecimal quantity) {
+        this.quantity = quantity;
+    }
 
-	public ProductCategory getProductCategory() {
-		return productCategory;
-	}
+    public Order getOrder() {
+        return order;
+    }
 
-	public void setProductCategory(ProductCategory productCategory) {
-		this.productCategory = productCategory;
-	}
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 
-	public String getNote() {
-		return note;
-	}
+    public ProductCategory getProductCategory() {
+        return productCategory;
+    }
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+    public void setProductCategory(ProductCategory productCategory) {
+        this.productCategory = productCategory;
+    }
 
-	public String getPhoto() {
-		return photo;
-	}
+    public String getNote() {
+        return note;
+    }
 
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
 }
