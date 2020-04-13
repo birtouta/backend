@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/productCategory", consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/productCategory")
 public class ProductCategoryController {
 
     @Autowired
