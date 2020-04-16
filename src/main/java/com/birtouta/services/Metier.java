@@ -31,7 +31,7 @@ public interface Metier {
         return new String(hexChars);
     }
 	
-	public static Timestamp getCurrentTimestamp() {
+	public static Date getCurrentTimestamp() {
 		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date d = new Date();
@@ -40,6 +40,6 @@ public interface Metier {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return (Timestamp)d;
+		return d;
 	}
 }

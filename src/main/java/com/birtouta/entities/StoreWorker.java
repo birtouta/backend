@@ -20,7 +20,7 @@ import lombok.Data;
 @Data
 public class StoreWorker implements Serializable {
 	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 		
 	private String accessCode; 

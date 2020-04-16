@@ -10,10 +10,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @SuppressWarnings("serial")
 @Entity
@@ -23,58 +21,58 @@ import java.util.Objects;
 public class Order  implements Serializable{
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private Long id;
 
-//	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at", nullable = false, updatable = false)
 	@CreationTimestamp
-	private Timestamp createdAt;
+	private Date createdAt;
 
-//	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at")
-	private Timestamp updatedAt;
+	private Date updatedAt;
 	
 	private int validated; 
 	
-//	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "validated_at")
-	private Timestamp validatedAt;
+	private Date validatedAt;
 
-//	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "received_at")
-	private Timestamp receivedAt;
+	private Date receivedAt;
 
 	private int prepared ;
 
-//	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "prepared_at")
-	private Timestamp preparedAt;
+	private Date preparedAt;
 
 	private int delivered ;
 
-//	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "delivered_at")
-	private Timestamp deliveredAt;
+	private Date deliveredAt;
 
 	private int approved ;
 
-//	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "approved_at")
-	private Timestamp approvedAt;
+	private Date approvedAt;
 
 	private int paid ;
 
-//	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "paid_at")
-	private Timestamp paidAt;
+	private Date paidAt;
 
 	private int canceled ;
 
-//	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "canceled_at")
-	private Timestamp canceledAt;
+	private Date canceledAt;
 
 	@Column(name = "type_delivers")
 	private int typeDelivery ;

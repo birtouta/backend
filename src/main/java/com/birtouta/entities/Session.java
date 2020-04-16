@@ -1,7 +1,7 @@
 package com.birtouta.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -18,7 +18,7 @@ public class Session implements Serializable{
 
 
 	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 	
@@ -30,20 +30,20 @@ public class Session implements Serializable{
 	@Column(columnDefinition = "TEXT")
 	private String smartphone;
 	
-//	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
-	private Timestamp createdAt;  
+	private Date createdAt;  
 	
-//	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "upadated_at")
-	private Timestamp updatedAt; 
+	private Date updatedAt; 
 	
-//	@Temporal(TemporalType.TIMESTAMP)
-	private Timestamp loginAt; 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date loginAt; 
 	
-//	@Temporal(TemporalType.TIMESTAMP)
-	private Timestamp logoutAt; 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date logoutAt; 
 	
 	
 	@ManyToOne
