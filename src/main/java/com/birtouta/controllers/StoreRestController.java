@@ -12,6 +12,7 @@ import com.birtouta.dao.SessionRepository;
 import com.birtouta.dao.StoreRepository;
 import com.birtouta.entities.Session;
 import com.birtouta.entities.Store;
+import com.birtouta.services.Response;
 
 @RestController
 @RequestMapping(path="/store",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE) 
@@ -24,13 +25,14 @@ public class StoreRestController {
 	private StoreRepository storeRepository; 
 	
 	
-	@PostMapping(path="/all")
-	public ResponseEntity<?> getAllStore( @RequestHeader("token") String token){
+	@PostMapping(path="/all" ,consumes = {MediaType.ALL_VALUE})
+	public ResponseEntity<?> getAllStore( @RequestHeader("Token") String token){
 		Session session = sessionRepository.findByToken(token);
 		if(session == null) {
-			return new ResponseEntity<String>("Unauthorized Token", HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<Response>(new Response("Unauthorized Token", null,  401, false), HttpStatus.UNAUTHORIZED);
+
 		}else {
-			return new ResponseEntity<List<Store>>(storeRepository.findAll(), HttpStatus.OK);
+			return new ResponseEntity<Response>(new Response("Stores successfully retreived !", storeRepository.findAll(),  200, true), HttpStatus.OK);
 		}
 	}
 }

@@ -60,8 +60,7 @@ public class AuthRestController {
 		}
 	}
 	
-	// Header must have content-type  = application/x-www-form-urlencoded
-	@PostMapping(path="/logout")
+	@PostMapping(path="/logout" ,consumes = {MediaType.ALL_VALUE})
 	public ResponseEntity<?>  logOut(@RequestHeader("Token") String token) {
 		Session session = sessionRepository.findByToken(token);
 		
