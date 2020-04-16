@@ -12,9 +12,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name="prodcut_categories")
-@Data
 @ToString
 @JsonIgnoreProperties({"orderProducts"})
+@Data
 public class ProductCategory implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

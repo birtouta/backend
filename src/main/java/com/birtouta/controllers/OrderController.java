@@ -9,6 +9,7 @@ import com.birtouta.services.OrderProductService;
 import com.birtouta.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(path = "/order")
+@RequestMapping(path = "/order",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 public class OrderController {
 
     @Autowired
@@ -51,7 +52,7 @@ public class OrderController {
         }
     }
 
-    @PutMapping(path = "/update")
+    @PostMapping(path = "/update")
     public @ResponseBody
     ResponseEntity<?> updateOrder(@Valid @RequestBody OrderDTO orderDTO) {
         Order users = orderService.saveOrUpdateOrder(orderDTO);
@@ -70,7 +71,7 @@ public class OrderController {
         }
     }
 
-    @GetMapping(path = "/getOrderProducts/{id}")
+    @PostMapping(path = "/getOrderProducts/{id}")
     public ResponseEntity<?> getOrderProducts(@PathVariable("id") Long id_order,@RequestHeader("Token") String token) {
         Session session = sessionRepository.findByToken(token);
         if (session == null) {

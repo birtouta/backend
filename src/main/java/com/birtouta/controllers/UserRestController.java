@@ -1,7 +1,5 @@
 package com.birtouta.controllers;
 
-import org.springframework.web.bind.annotation.RestController;
-
 import com.birtouta.dao.SessionRepository;
 import com.birtouta.dao.UserRepository;
 import com.birtouta.entities.Session;
@@ -12,11 +10,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path="/user") 
+@RequestMapping(path="/user",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+
 public class UserRestController {
 	@Autowired
 	private UserRepository userRepository;
@@ -45,7 +45,7 @@ public class UserRestController {
 		
 	}
 	
-	@DeleteMapping(path="/disable")
+	@PostMapping(path="/disable")
 	public ResponseEntity<?> disableUser (@RequestParam(required = true) String phone) {
 		
 		User u = userRepository.findByPhone(phone) ;
@@ -57,14 +57,14 @@ public class UserRestController {
 		}else {
 		
 			u.setDeleted(1);
-			u.setUpdated_at(Metier.getCurrentTimestamp());
+			u.setUpdatedAt(Metier.getCurrentTimestamp());
 			userRepository.save(u);
 			return new ResponseEntity<String>("{\"success\":1,"
 					+ "\"message\": \"the user has been disabled !\"}", HttpStatus.OK);
 		}
 	}
 	
-	@PutMapping(path="/enable")
+	@PostMapping(path="/enable")
 	public ResponseEntity<?>  enableUser (@RequestParam(required = true) String phone) {
 		
 		User u = userRepository.findByPhone(phone) ;
@@ -75,14 +75,14 @@ public class UserRestController {
 					+ "\"message\": \"user's phone number does not exist in the database !\"}", HttpStatus.UNAUTHORIZED);
 		}else {
 			u.setDeleted(0);
-			u.setUpdated_at(Metier.getCurrentTimestamp());
+			u.setUpdatedAt(Metier.getCurrentTimestamp());
 			userRepository.save(u);
 			return new ResponseEntity<String> ("{\"success\":1,"
 					+ "\"message\": \"the user has been enabled !\"}", HttpStatus.OK);
 		}
 	}
 	
-	@PutMapping(path="/update") 
+	@PostMapping(path="/update") 
 	public ResponseEntity<?> updateUser (@RequestBody User user, @RequestHeader("Token") String token ) {
 		Session session = sessionRepository.findByToken(token);
 		if(session == null) {
@@ -98,7 +98,7 @@ public class UserRestController {
 	}
 	
 	@PostMapping(path="/checkphone")
-	public ResponseEntity<?> checkUserPhone (@RequestParam(required = true) String phone, @RequestHeader("Token") String token ) {
+	public ResponseEntity<?> checkUserPhone (@RequestBody String phone, @RequestHeader("Token") String token ) {
 		
 		Session session = sessionRepository.findByToken(token);
 		if(session == null) {
@@ -118,8 +118,7 @@ public class UserRestController {
 	}
 	
 	
-//	@GetMapping(path="/allUsers")
-	@GetMapping(path="/all")
+	@PostMapping(path="/all")
 	public ResponseEntity<?> getAllUsers(@RequestHeader("Token") String token) {
 		Session session = sessionRepository.findByToken(token);
 		if(session == null) {

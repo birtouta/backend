@@ -2,6 +2,7 @@ package com.birtouta.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ import com.birtouta.entities.Session;
 import com.birtouta.entities.User;
 
 @RestController
-@RequestMapping(path="/config")
+@RequestMapping(path="/config",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 public class ConfigRestController {
 	@Autowired
 	ConfigurationRepository configurationRepository; 

@@ -21,7 +21,7 @@ import java.util.Date;
 
 
 @RestController
-@RequestMapping(path="/session", consumes = MediaType.APPLICATION_JSON_VALUE) 
+@RequestMapping(path="/session", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE) 
 public class SessionRestController {
 	
 	@Autowired
@@ -36,32 +36,23 @@ public class SessionRestController {
 		return sessionRepository.save(session);
 	}
 	
-	@PatchMapping(path="/update")
+	@PostMapping(path="/update")
 	public ResponseEntity<?>  updateSession(@RequestBody Session session,  @RequestHeader("Token") String token) {
 		
 		Session s = sessionRepository.findByToken(token);
 		if(s == null) {
 			return new ResponseEntity<String>("Unauthorized Token", HttpStatus.UNAUTHORIZED);
-		}else {
-			
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date d = new Date();
-			try {
-				d = df.parse(df.format(new Timestamp(System.currentTimeMillis())));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			
+		}else {		
 			s.setBuild(session.getBuild());
 			s.setSmartphone(session.getSmartphone());	
-			s.setUpdatedAt(d);
+			s.setUpdatedAt(Metier.getCurrentTimestamp());
 			
 			sessionRepository.save(s);
 			return ResponseEntity.ok("The session has been successfully  updated");
 		}
 	}
 	
-	@DeleteMapping(path="/delete")
+	@PostMapping(path="/delete")
 	public ResponseEntity<?>  deleteSession(@RequestHeader("Token") String token) {
 		
 		Session s = sessionRepository.findByToken(token);
@@ -75,7 +66,7 @@ public class SessionRestController {
 		}
 	}
 	
-	@GetMapping(path="/all")
+	@PostMapping(path="/all")
 	public Iterable<Session> GetAllSession(){
 		return sessionRepository.findAll();
 	}

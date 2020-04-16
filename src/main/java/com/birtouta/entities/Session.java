@@ -1,7 +1,7 @@
 package com.birtouta.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.*;
 
@@ -9,8 +9,11 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.Data;
+
 @Entity
 @Table(name="sessions")
+@Data
 public class Session implements Serializable{
 
 
@@ -21,24 +24,26 @@ public class Session implements Serializable{
 	
 	private String token; 
 	private String platform; 
-	private String build; 
+	private int build; 
 	private String fcm_token; 
+	
+	@Column(columnDefinition = "TEXT")
 	private String smartphone;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+//	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
-	private Date createdAt;  
+	private Timestamp createdAt;  
 	
-	@Temporal(TemporalType.TIMESTAMP)
+//	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "upadated_at")
-	private Date updatedAt; 
+	private Timestamp updatedAt; 
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date loginAt; 
+//	@Temporal(TemporalType.TIMESTAMP)
+	private Timestamp loginAt; 
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date logoutAt; 
+//	@Temporal(TemporalType.TIMESTAMP)
+	private Timestamp logoutAt; 
 	
 	
 	@ManyToOne
@@ -47,10 +52,8 @@ public class Session implements Serializable{
     private User user;
 
 	public Session() {}
-	
 
-
-	public Session(String platform, String build, String fcm_token, String smartphone) {
+	public Session(String platform, int build, String fcm_token, String smartphone) {
 		super();
 		this.platform = platform;
 		this.build = build;
@@ -58,129 +61,4 @@ public class Session implements Serializable{
 		this.smartphone = smartphone;
 	}
 
-
-
-	public Long getId() {
-		return id;
-	}
-
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-
-	public String getToken() {
-		return token;
-	}
-
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-
-	public String getPlatform() {
-		return platform;
-	}
-
-
-	public void setPlatform(String platform) {
-		this.platform = platform;
-	}
-
-
-	public String getBuild() {
-		return build;
-	}
-
-
-	public void setBuild(String build) {
-		this.build = build;
-	}
-
-
-	public String getFcm_token() {
-		return fcm_token;
-	}
-
-
-	public void setFcm_token(String fcm_token) {
-		this.fcm_token = fcm_token;
-	}
-
-
-	public String getSmartphone() {
-		return smartphone;
-	}
-
-
-	public void setSmartphone(String smartphone) {
-		this.smartphone = smartphone;
-	}
-
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-
-
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-
-
-
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
-
-
-	public Date getLogoutAt() {
-		return logoutAt;
-	}
-
-
-
-	public void setLogoutAt(Date logoutAt) {
-		this.logoutAt = logoutAt;
-	}
-
-
-
-	public Date getLoginAt() {
-		return loginAt;
-	}
-
-
-	public void setLoginAt(Date loginAt) {
-		this.loginAt = loginAt;
-	}
-
-
-	public Date getLougoutAt() {
-		return logoutAt;
-	}
-
-
-	public void setLougoutAt(Date logoutAt) {
-		this.logoutAt = logoutAt;
-	}
-
-
-	public User getUser() {
-		return user;
-	}
-
-
-	public void setUser(User user) {
-		this.user = user;
-	}
 }

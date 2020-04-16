@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/productCategory")
+@RequestMapping(path = "/productCategory",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 public class ProductCategoryController {
 
     @Autowired
@@ -34,7 +34,7 @@ public class ProductCategoryController {
         }
     }
 
-    @PutMapping(path = "/update")
+    @PostMapping(path = "/update")
     public ResponseEntity<?> updateProductCategory(@RequestBody ProductCategory productCategory, @RequestHeader("Token") String token) {
 
         Session session = sessionRepository.findByToken(token);
@@ -46,7 +46,7 @@ public class ProductCategoryController {
         }
     }
 
-    @DeleteMapping(path="/delete")
+    @PostMapping(path="/delete")
     public ResponseEntity<?> deleteProductCategory (@RequestParam Long id_product_category,@RequestHeader("Token") String token) {
 
         Session session = sessionRepository.findByToken(token);
@@ -58,7 +58,7 @@ public class ProductCategoryController {
         }
     }
 
-    @GetMapping(path="/all")
+    @PostMapping(path="/all")
     public ResponseEntity<?> getAllProductCategories(@RequestHeader("Token") String token) {
         Session session = sessionRepository.findByToken(token);
         if(session == null) {

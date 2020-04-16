@@ -12,9 +12,12 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.Data;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name="store_workers")
+@Data
 public class StoreWorker implements Serializable {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -31,37 +34,5 @@ public class StoreWorker implements Serializable {
 	@JoinColumn(name="id_store")
 	@JsonBackReference
 	private Store store;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getAccessCode() {
-		return accessCode;
-	}
-
-	public void setAccessCode(String accessCode) {
-		this.accessCode = accessCode;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Store getStore() {
-		return store;
-	}
-
-	public void setStore(Store store) {
-		this.store = store;
-	}
 	
 }

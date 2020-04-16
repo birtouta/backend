@@ -2,6 +2,7 @@ package com.birtouta.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,7 @@ import com.birtouta.entities.User;
 import com.birtouta.services.Metier;
 
 @RestController
-@RequestMapping(path="/auth") 
+@RequestMapping(path="/auth",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE) 
 public class AuthRestController {
 
 	@Autowired
@@ -48,7 +49,6 @@ public class AuthRestController {
 					session.setUpdatedAt(Metier.getCurrentTimestamp());
 
 					sessionRepository.save(session);
-					
 					return ResponseEntity.ok(user);
 					
 				}else {

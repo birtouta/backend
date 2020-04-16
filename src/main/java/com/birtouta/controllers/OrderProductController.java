@@ -9,7 +9,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/orderProduct")
+@RequestMapping(path = "/orderProduct",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 public class OrderProductController {
 
     @Autowired

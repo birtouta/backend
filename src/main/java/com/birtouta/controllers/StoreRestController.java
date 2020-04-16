@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,7 @@ import com.birtouta.entities.Session;
 import com.birtouta.entities.Store;
 
 @RestController
-@RequestMapping(path="/store") 
+@RequestMapping(path="/store",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE) 
 public class StoreRestController {
 	
 	@Autowired
@@ -23,7 +24,7 @@ public class StoreRestController {
 	private StoreRepository storeRepository; 
 	
 	
-	@GetMapping(path="/all")
+	@PostMapping(path="/all")
 	public ResponseEntity<?> getAllStore( @RequestHeader("token") String token){
 		Session session = sessionRepository.findByToken(token);
 		if(session == null) {

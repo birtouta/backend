@@ -3,6 +3,8 @@ package com.birtouta.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -14,6 +16,7 @@ import java.util.Objects;
         @NamedQuery(name = "OrderProduct.findAllProductsByOrder", query = "SELECT p FROM OrderProduct p where p.order.id =:id_order")
 })
 @JsonIgnoreProperties({"order", "productCategory"})
+@Data
 public class OrderProduct implements Serializable {
 
     @Id
@@ -42,9 +45,6 @@ public class OrderProduct implements Serializable {
     @JsonBackReference(value="productCategory")
     private ProductCategory productCategory;
 
-    public OrderProduct() {
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,70 +56,6 @@ public class OrderProduct implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public BigDecimal getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(BigDecimal quantity) {
-        this.quantity = quantity;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public ProductCategory getProductCategory() {
-        return productCategory;
-    }
-
-    public void setProductCategory(ProductCategory productCategory) {
-        this.productCategory = productCategory;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
     }
 
 }
