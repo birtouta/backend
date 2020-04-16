@@ -1,6 +1,7 @@
 package com.birtouta.controllers;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.data.repository.support.Repositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class SessionRestController {
 
 		String hash  = Metier.generateTokenHash();		
 		session.setToken(hash);
-		 return new ResponseEntity<Response>(new Response("Session created successfully !", session,  200, true), HttpStatus.OK);
+		return new ResponseEntity<Response>(new Response("Session created successfully !", sessionRepository.save(session),  200, true), HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/update")
