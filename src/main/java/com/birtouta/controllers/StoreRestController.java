@@ -32,7 +32,11 @@ public class StoreRestController {
 			return new ResponseEntity<Response>(new Response("Unauthorized Token", null,  401, false), HttpStatus.UNAUTHORIZED);
 
 		}else {
-			return new ResponseEntity<Response>(new Response("Stores successfully retreived !", storeRepository.findAll(),  200, true), HttpStatus.OK);
+			List<Store> stores = storeRepository.findAll();
+			stores.forEach(store ->{
+				store.setPhoto("https://store.houmti.net/assets/img/"+store.getPhoto());
+			});	
+			return new ResponseEntity<Response>(new Response("Stores successfully retreived !",stores,  200, true), HttpStatus.OK);
 		}
 	}
 }

@@ -5,8 +5,11 @@ import com.birtouta.dao.SessionRepository;
 import com.birtouta.dao.StoreRepository;
 import com.birtouta.dto.OrderDTO;
 import com.birtouta.entities.*;
+import com.birtouta.services.Metier;
 import com.birtouta.services.OrderProductService;
 import com.birtouta.services.OrderService;
+import com.birtouta.services.Response;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -41,33 +44,36 @@ public class OrderController {
 
         Session session = sessionRepository.findByToken(token);
         if (session == null) {
-            return new ResponseEntity<String>("Unauthorized Token", HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<Response>(new Response("Unauthorized Token", null,  401, false), HttpStatus.UNAUTHORIZED);
         } else {
             User user = session.getUser();
             Order order = new Order();
             Store store = storeRepository.findStoreById(id_store);
             order.setStore(store);
             order.setUser(user);
-            return new ResponseEntity<Order>(orderRepository.save(order), HttpStatus.CREATED);
+			return new ResponseEntity<Response>(new Response("Store successfully created !", orderRepository.save(order),  200, true), HttpStatus.OK);
         }
     }
 
     @PostMapping(path = "/update")
-    public @ResponseBody
-    ResponseEntity<?> updateOrder(@Valid @RequestBody OrderDTO orderDTO) {
-        Order users = orderService.saveOrUpdateOrder(orderDTO);
-        return new ResponseEntity<OrderDTO>(orderDTO, HttpStatus.OK);
+    public  ResponseEntity<?> updateOrder(Order order, @RequestHeader("Token") String token ) {
+        Session session = sessionRepository.findByToken(token);
+    	if (session == null) {
+			return new ResponseEntity<Response>(new Response("Unauthorized Token", null,  401, false), HttpStatus.UNAUTHORIZED);
+        } else {
+        	Order ordersrc  = orderRepository.getById(order.getId());
+        	Metier.copyNonNullProperties(order, ordersrc);
+			return new ResponseEntity<Response>(new Response("Order successfully updated ! ", orderRepository.save(order),  200, true), HttpStatus.OK);
+        }
     }
 
-    @GetMapping(path = "/all")
+    @PostMapping(path = "/all", consumes = MediaType.ALL_VALUE)
     public ResponseEntity<?> getAllUsers(@RequestHeader("Token") String token) {
         Session session = sessionRepository.findByToken(token);
         if (session == null) {
-            return new ResponseEntity<String>("Unauthorized Token", HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<Response>(new Response("Unauthorized Token", null,  401, false), HttpStatus.UNAUTHORIZED);
         } else {
-            User user = session.getUser();
-            List<Order> orders=user.getOrders();
-            return new ResponseEntity<List<Order>>(orders, HttpStatus.OK);
+			return new ResponseEntity<Response>(new Response("Orders successfully retreived !", session.getUser().getOrders(),  200, true), HttpStatus.OK);
         }
     }
 

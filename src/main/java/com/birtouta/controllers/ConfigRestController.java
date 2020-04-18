@@ -11,6 +11,7 @@ import com.birtouta.dao.SessionRepository;
 import com.birtouta.entities.Configuration;
 import com.birtouta.entities.Session;
 import com.birtouta.entities.User;
+import com.birtouta.services.Metier;
 import com.birtouta.services.Response;
 
 @RestController
@@ -36,6 +37,7 @@ public class ConfigRestController {
 			
 			Configuration  c = session.getUser().getConfiguration(); 
 			configuration.setId(c.getId());
+			configuration.setUpdatedAt(Metier.getCurrentTimestamp());
 			return new ResponseEntity<Response>(new Response("Configuration successfully updated !", configurationRepository.save(configuration),  200, true), HttpStatus.OK);
 		}
 	}

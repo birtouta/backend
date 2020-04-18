@@ -16,7 +16,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="orders")
-@JsonIgnoreProperties({"store", "user", "delivery"})
+@JsonIgnoreProperties({"store", "user", "orderProducts", "delivery"})
 @Data
 public class Order  implements Serializable{
 
